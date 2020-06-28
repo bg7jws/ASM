@@ -12,7 +12,7 @@ metrix2 dw 4 dup(4 dup(?))
 
 buffer	db 5 dup(0),'$'		;define a buffer for change numbers to ascii use
 crlf	db 0dh,0ah,024h		;define carry return and line feed
-space	db 09h'$'	;define space of two numbers
+space	db 09h'$'		;define space of two numbers
 metrixm	db 4			;define metrix M*N as 4*4
 metrixn	db 4
 .code
