@@ -25,7 +25,7 @@ start:
 	mov es,ax		;initial es segment
 	mov si,2		;define the first income offset in table0
 	mov di,4		;define the first expense offset in table0
-	mov cl,years	;move years as the loop times
+	mov cl,years		;move years as the loop times
 loop0:	mov ax,table0[si]	;the income put in to ax
 	sub ax,table0[di]	;income - expense get the rest
 	mov table0[si+4],ax	;put the rest into the table0
