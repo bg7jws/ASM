@@ -1,5 +1,5 @@
 .model small
-;.stack 100h                    ;remark stack it can run correct,otherwise convert not run
+.stack 100h                    ;remark stack it can run correct,otherwise convert not run
 .data
 metrix0	dw 4 dup(4 dup(?)
 ;metrix0	dw 1,2,3,4
