@@ -1,9 +1,0 @@
-这是一个386控制台程序.
-用控制台读数字字符串存入szBuffer
-这个程序熟悉win32控制台编程的基本步骤和框架后，调用子程序，子程序单独文件存在
-主程序中用include 子程序名引入子程序的定义
-子程序从lpOffset读取Ascii形式的数字串，转换程hex数字保存在eax
-主程序继续执行用wsprintf将eax转换成十进制字符串保存在buffer
-messagebox显示
-如果仍然使用windows模式的makeit.bat,会生成exe文件，但是运行后无控制台输入直接显示messagebox。
-建议在本例中留意addr 和 offset的用法
