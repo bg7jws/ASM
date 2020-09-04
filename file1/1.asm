@@ -33,7 +33,7 @@ start:
 		inc edi
 	.endw
 	xor eax, eax
-	mov al, sum
+	mov al,sum
 	invoke wsprintf, addr buffer, addr szFmt, eax
 	invoke MessageBox, NULL, offset buffer, offset Caption, MB_OK
 	invoke ExitProcess, 0
