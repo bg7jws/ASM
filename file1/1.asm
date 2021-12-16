@@ -11,7 +11,7 @@ includelib user32.lib
 .data
 a		db 10 dup(0)
 buffer	db 20 dup(0)
-Caption	db 'Êä³ö', 0
+Caption	db 'è¾“å‡º', 0
 szFmt	db 'The Result is %d', 0
 i		db 0
 sum		db 0
