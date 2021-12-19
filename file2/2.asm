@@ -1,4 +1,4 @@
-;ml /c /coff  %1.asm
+ï»¿;ml /c /coff  %1.asm
 ;link /subsystem:windows %1.obj
 .586
 .model flat, stdcall
@@ -11,8 +11,8 @@ includelib	user32.lib
 
 .data
 sysTime SYSTEMTIME <>
-CapMsg	db 'ÏµÍ³µ±Ç°Ê±¼ä',0
-szFmt	db '%dÄê%2dÔÂ%2dÈÕ',0dh,0ah,0dh,0ah
+CapMsg	db 'ç³»ç»Ÿå½“å‰æ—¶é—´',0
+szFmt	db '%då¹´%2dæœˆ%2dæ—¥',0dh,0ah,0dh,0ah
 		db '%2d:%2d:%2d',0
 buffer	db 80 dup(0)
 .code
