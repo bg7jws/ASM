@@ -1,4 +1,4 @@
-﻿;ml /c /coff  %1.asm
+;ml /c /coff  %1.asm
 ;link /subsystem:windows %1.obj
 .586
 .model flat, stdcall

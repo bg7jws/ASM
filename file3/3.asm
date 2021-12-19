@@ -11,7 +11,7 @@ includelib	kernel32.lib
 
 .data
 crlf	equ <0dh,0ah>
-message	db crlf,crlf,'¿ØÖÆÌ¨Êä³ö',crlf
+message	db crlf,crlf,'æ§åˆ¶å°è¾“å‡º',crlf
 		db '----------',crlf
 messageSize	db ($-message)
 ConsoleHandle	dword 0
