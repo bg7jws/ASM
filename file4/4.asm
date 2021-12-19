@@ -16,7 +16,7 @@ dwBytesRead		dword ?
 hStdOut			dword ?
 hStdIn			dword ?
 szBuffer		byte 64 dup(0)
-szFmt			byte '你输入的数是%d',0
+szFmt			byte '浣犺緭鍏ョ殑鏁版槸%d',0
 buffer			byte 128 dup(?)
 CapMsg			byte 'Output',0
 .code

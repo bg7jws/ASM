@@ -1,31 +1,31 @@
 #include <stdio.h>
 #include <string.h>
 
-int kmp(char *text, char *search_string);								;kmpÓĞÁ½¸öÊäÈë²ÎÊı *textÊÇÄ¿±ê×Ö·û´®, search_stringÊÇ¼üÅÌÊäÈëµÄÄ£×Ö·û´®
+int kmp(char *text, char *search_string);								;kmpæœ‰ä¸¤ä¸ªè¾“å…¥å‚æ•° *textæ˜¯ç›®æ ‡å­—ç¬¦ä¸², search_stringæ˜¯é”®ç›˜è¾“å…¥çš„æ¨¡å­—ç¬¦ä¸²
 
 int main(int argc, char **argv){
 
-	if(argc != 2){														;Èç¹ûÃüÁîĞĞ²ÎÊı´íÎóµÄÏÔÊ¾
+	if(argc != 2){														;å¦‚æœå‘½ä»¤è¡Œå‚æ•°é”™è¯¯çš„æ˜¾ç¤º
 		printf("Invalid command line arguments\n");
 		return -1;
 	}
 	
 
-	char *text = argv[1];												;*text¸³Öµ´®Ê×µØÖ·
+	char *text = argv[1];												;*textèµ‹å€¼ä¸²é¦–åœ°å€
 	
 	
 	printf("Search pattern: ");
-	char search_string[strlen(text)];									;¶¨Òåsearch_string×î³¤¿Õ¼äÎªstrlen(text)
-	fscanf(stdin, "%s", search_string);									;»ñÈ¡Ä£´®µÄ¼üÅÌÊäÈë
+	char search_string[strlen(text)];									;å®šä¹‰search_stringæœ€é•¿ç©ºé—´ä¸ºstrlen(text)
+	fscanf(stdin, "%s", search_string);									;è·å–æ¨¡ä¸²çš„é”®ç›˜è¾“å…¥
 	
-	printf("Prefix table:\n");											;ÏÔÊ¾Prefix table:»»ĞĞ
-	int first_position	= kmp (text, search_string);					;µ÷ÓÃkmpº¯Êı¼ÆËãfirst_position
+	printf("Prefix table:\n");											;æ˜¾ç¤ºPrefix table:æ¢è¡Œ
+	int first_position	= kmp (text, search_string);					;è°ƒç”¨kmpå‡½æ•°è®¡ç®—first_position
 	
-	printf("\n");														;»»ĞĞ
-	if(first_position==101)												;Èç¹û·µ»ØÖµµÈÓÚ101£¬ÏÔÊ¾Î´ÕÒµ½
+	printf("\n");														;æ¢è¡Œ
+	if(first_position==101)												;å¦‚æœè¿”å›å€¼ç­‰äº101ï¼Œæ˜¾ç¤ºæœªæ‰¾åˆ°
 		printf("The search pattern could not find in the text.\n");
 	else
-		printf("First position: %d (index starting from 0)\n", first_position);ÕÒµ½ÏÔÊ¾first_positionµÄÊ®½øÖÆÕûÊıÖµ
+		printf("First position: %d (index starting from 0)\n", first_position);æ‰¾åˆ°æ˜¾ç¤ºfirst_positionçš„åè¿›åˆ¶æ•´æ•°å€¼
 
 	return(0);
 }

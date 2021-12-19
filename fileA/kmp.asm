@@ -1,9 +1,9 @@
-segment .data						;Êı¾İ¶Î
-array	times 100 dd 0				;¶¨ÒåÒ»¸öÊı×é£¬100¸öË«×Ö£¬³õÊ¼»¯Îª0
+segment .data						;æ•°æ®æ®µ
+array	times 100 dd 0				;å®šä¹‰ä¸€ä¸ªæ•°ç»„ï¼Œ100ä¸ªåŒå­—ï¼Œåˆå§‹åŒ–ä¸º0
 
-segment .text						;´úÂë¶Î
-global kmp							;kmpÎªÈ«¾ÖÊ¹ÓÃº¯Êı
-extern strlen						;strlenÊÇÍâ²¿º¯Êı
+segment .text						;ä»£ç æ®µ
+global kmp							;kmpä¸ºå…¨å±€ä½¿ç”¨å‡½æ•°
+extern strlen						;strlenæ˜¯å¤–éƒ¨å‡½æ•°
 
 kmp:
 	push ebp
@@ -24,21 +24,21 @@ prefix:
 	jmp nequal										;no jmp to neequal
 equal:					;array[edi] = ++esi
 	inc esi
-	mov [array+4*edi], esi							;esi save in array[edi], arrayÊı×éÖĞediÏÂ±ê
+	mov [array+4*edi], esi							;esi save in array[edi], arrayæ•°ç»„ä¸­ediä¸‹æ ‡
 	inc edi											;edi move 1 char
 	jmp prefix										;continue find prefix
 nequal:					;esi=0; array[edi] = esi
-	xor esi, esi									;Ò»µ©Óöµ½²»ÏàÍ¬µÄ£¬esiÖÃÁã
+	xor esi, esi									;ä¸€æ—¦é‡åˆ°ä¸ç›¸åŒçš„ï¼Œesiç½®é›¶
 	mov ah, [ecx+esi]
-	cmp ah, al										;µ±Ç°×Ö·ûÔÙ´ÎºÍµÚÒ»¸ö×Ö·û±È½Ï
-	jne next										;²»Í¬£¬jmp next
-	inc esi											;ÏàÍ¬£¬esi move 1 char
+	cmp ah, al										;å½“å‰å­—ç¬¦å†æ¬¡å’Œç¬¬ä¸€ä¸ªå­—ç¬¦æ¯”è¾ƒ
+	jne next										;ä¸åŒï¼Œjmp next
+	inc esi											;ç›¸åŒï¼Œesi move 1 char
 next:
-	mov [array+4*edi], esi							;ÀàËÆequalÖĞµÄÍ¬Ñù²Ù×÷
+	mov [array+4*edi], esi							;ç±»ä¼¼equalä¸­çš„åŒæ ·æ“ä½œ
 	inc edi											;edi move 1 char
 	jmp prefix										;continue find prefix
-;Ö±µ½Óöµ½00£¬Ç°×º±í¼ÆËã½áÊø£¬´ËÊ±£¬Ç°×º±íÖĞ±£´æÁËÈç¹ûÏàÍ¬£¬esi²»ĞèÒªÔÙ»ØËİµÄÆ«ÒÆÁ¿
-;±ÈÈçAAABC array ±£´æÁË£¬0£¬1£¬2£¬0£¬0ÓÃË«×ÖµÄ¸ñÊ½
+;ç›´åˆ°é‡åˆ°00ï¼Œå‰ç¼€è¡¨è®¡ç®—ç»“æŸï¼Œæ­¤æ—¶ï¼Œå‰ç¼€è¡¨ä¸­ä¿å­˜äº†å¦‚æœç›¸åŒï¼Œesiä¸éœ€è¦å†å›æº¯çš„åç§»é‡
+;æ¯”å¦‚AAABC array ä¿å­˜äº†ï¼Œ0ï¼Œ1ï¼Œ2ï¼Œ0ï¼Œ0ç”¨åŒå­—çš„æ ¼å¼
 search:
 	xor esi, esi		;esi=0						;initial source char begin from 0
 	xor edi, edi		;edi=0						;initial text target char begin from 0
@@ -57,13 +57,13 @@ pair:				;edi++;esi++					;pair to continue next esi and next edi
 	inc esi
 	jmp search_loop
 unpair:				;edi++;esi = array[esi]s	
-	cmp esi, 0										;search string ÖĞµÚÒ»¸ö¾Í²»Æ¥ÅäÊ±ºò£¬edi+1, esi»¹ÊÇ´Ó0¿ªÊ¼£¬esi±£³Ö0²»±ä
+	cmp esi, 0										;search string ä¸­ç¬¬ä¸€ä¸ªå°±ä¸åŒ¹é…æ—¶å€™ï¼Œedi+1, esiè¿˜æ˜¯ä»0å¼€å§‹ï¼Œesiä¿æŒ0ä¸å˜
 	je next_u
-	dec esi											;search stringµÚ¶ş¸öÖ®ºó²Å²»Æ¥ÅäÊ±,¸ù¾İ²¿·ÖÆ¥Åä±í»ñµÃsearch string µÄ esiÆ«ÒÆÖµ
+	dec esi											;search stringç¬¬äºŒä¸ªä¹‹åæ‰ä¸åŒ¹é…æ—¶,æ ¹æ®éƒ¨åˆ†åŒ¹é…è¡¨è·å¾—search string çš„ esiåç§»å€¼
 	push dword[array+4*esi]							
 	pop esi											
 	jmp search_loop									;continue search
-next_u:												;search string ÖĞµÚÒ»¸ö¾Í²»Æ¥ÅäÊ±ºò£¬edi+1, esi»¹ÊÇ´Ó0¿ªÊ¼£¬esi±£³Ö0²»±ä
+next_u:												;search string ä¸­ç¬¬ä¸€ä¸ªå°±ä¸åŒ¹é…æ—¶å€™ï¼Œedi+1, esiè¿˜æ˜¯ä»0å¼€å§‹ï¼Œesiä¿æŒ0ä¸å˜
 	inc edi
 	jmp search_loop
 	
@@ -73,9 +73,9 @@ found:												;pair success, edi-esi=begin of text pair address
 notfound:
 	mov edi, 101									;set notfound mark
 end:
-	push dword [ebp+12]		;get search pattern length to esi	;Îªstrlenº¯Êı×¼±¸²ÎÊı,get the lenth of search_string
+	push dword [ebp+12]		;get search pattern length to esi	;ä¸ºstrlenå‡½æ•°å‡†å¤‡å‚æ•°,get the lenth of search_string
 	call strlen													;call for strlen
-	add esp, 4													;call Ö®ºó»Ö¸´esp
+	add esp, 4													;call ä¹‹åæ¢å¤esp
 	mov esi, eax												;call return a number in eax, save it in esi
 
 	mov ecx, 0				; ecx as counter
@@ -84,17 +84,17 @@ tochar:
 	inc ecx
 	cmp ecx, esi
 	jne tochar
-	mov dword[array + 4*ecx], 10	; endline char					;mark end of ²¿·ÖÆ¥Åä±í 0a is Line feed
+	mov dword[array + 4*ecx], 10	; endline char					;mark end of éƒ¨åˆ†åŒ¹é…è¡¨ 0a is Line feed
 
-	mov eax, 4			; write system call							;¸øÏµÍ³µ÷ÓÃ×¼±¸²ÎÊı£¬ÏÔÊ¾arrayµØÖ·±£´æµÄ²¿·ÖÆ¥Åä±í
+	mov eax, 4			; write system call							;ç»™ç³»ç»Ÿè°ƒç”¨å‡†å¤‡å‚æ•°ï¼Œæ˜¾ç¤ºarrayåœ°å€ä¿å­˜çš„éƒ¨åˆ†åŒ¹é…è¡¨
 	mov ebx, 1			; stdout
 	mov ecx, array			; start address
 	inc esi				; array length + endline char
 	shl esi,2			; esi *= 4
 	mov edx, esi	
-	int $80															;call stdoutÏµÍ³µ÷ÓÃ
+	int $80															;call stdoutç³»ç»Ÿè°ƒç”¨
 	
-	mov eax, edi	;return value in eax<-edi						;ediÖĞ±£´æµÄÊÇÆ¥Åä³É¹¦ºóµÄtextÊ××Ö·ûÆ«ÒÆµØÖ·,save in eax ready for kmp return
+	mov eax, edi	;return value in eax<-edi						;ediä¸­ä¿å­˜çš„æ˜¯åŒ¹é…æˆåŠŸåçš„texté¦–å­—ç¬¦åç§»åœ°å€,save in eax ready for kmp return
 	mov esp, ebp	;recover to before call kmp
 	pop ebp
 	ret

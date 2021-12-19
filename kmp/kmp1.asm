@@ -11,8 +11,8 @@ includelib masm32.lib
 includelib kernel32.lib
 includelib user32.lib
 kmp proto:dword,:dword
-.data						;Êı¾İ¶Î
-array	dword 100 dup(0)	;¶¨ÒåÒ»¸öÊı×é£¬100¸öË«×Ö£¬³õÊ¼»¯Îª0
+.data						;æ•°æ®æ®µ
+array	dword 100 dup(0)	;å®šä¹‰ä¸€ä¸ªæ•°ç»„ï¼Œ100ä¸ªåŒå­—ï¼Œåˆå§‹åŒ–ä¸º0
 szMsg0	byte 'Please input the Text string, it should be longer than 2 characters.',0dh,0ah,0
 messageSize0	db ($-szMsg0)
 szMsg1	byte 'Invalid text, too short!',0dh,0ah,0
@@ -35,31 +35,31 @@ szSearchString	byte 12 dup(0)
 szFmt			byte '%d',0
 buffer			byte 4 dup(?)
 foundmark		byte 0
-.code						;´úÂë¶Î
+.code						;ä»£ç æ®µ
 start:
-;»ñÈ¡±ê×¼ÊäÈëÊä³öµÄhandle
+;è·å–æ ‡å‡†è¾“å…¥è¾“å‡ºçš„handle
 	invoke	GetStdHandle, STD_OUTPUT_HANDLE							
 		mov hStdOut,eax
 	invoke	GetStdHandle, STD_INPUT_HANDLE
 		mov hStdIn,eax
-;¿ØÖÆÌ¨ÊäÈëtext,¼ÆËã×Ö½ÚÊı£¬²¢½áÎ²Ìî0
+;æ§åˆ¶å°è¾“å…¥text,è®¡ç®—å­—èŠ‚æ•°ï¼Œå¹¶ç»“å°¾å¡«0
 	invoke StdOut, addr szMsg0	
 	invoke	ReadConsole, hStdIn, addr szText, sizeof szText, addr dwBytesText, NULL	
 		sub dwBytesText,2
 		mov ebx,dwBytesText
 		mov byte ptr szText[ebx],0
-;ÅĞ¶Ï×Ö·ûÊıÁ¿ÊÇ·ñ´óÓÚ2£¬·ñÔòÏÔÊ¾´íÎóĞÅÏ¢
+;åˆ¤æ–­å­—ç¬¦æ•°é‡æ˜¯å¦å¤§äº2ï¼Œå¦åˆ™æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
 	.if dwBytesText < 2							
 		invoke	WriteConsole, hStdOut, addr szMsg1, messageSize1, addr dwBytesWrite, NULL
 		jmp leave_prog
 	.endif
-;¿ØÖÆÌ¨»ñÈ¡pattern´®
+;æ§åˆ¶å°è·å–patternä¸²
 	invoke StdOut, addr szMsg2					
 	invoke	ReadConsole, hStdIn, addr szSearchString, sizeof szSearchString, addr dwBytesPtn, NULL
 		sub dwBytesPtn,2
 		mov ebx,dwBytesPtn
 		mov byte ptr szSearchString[ebx],0
-;¿ØÖÆÌ¨ÏÔÊ¾²¿·ÖÆ¥Åä±íÌ§Í·£¬ÏÂÒ»ĞĞÏÔÊ¾²¿·ÖÆ¥Åä±í£¬ÔÙÁ½´Î»»ĞĞºóÏÔÊ¾²éÕÒ½á¹û
+;æ§åˆ¶å°æ˜¾ç¤ºéƒ¨åˆ†åŒ¹é…è¡¨æŠ¬å¤´ï¼Œä¸‹ä¸€è¡Œæ˜¾ç¤ºéƒ¨åˆ†åŒ¹é…è¡¨ï¼Œå†ä¸¤æ¬¡æ¢è¡Œåæ˜¾ç¤ºæŸ¥æ‰¾ç»“æœ
 	invoke StdOut, addr szMsg3
 	invoke	kmp, addr szText, addr szSearchString
 	.if foundmark == 0
@@ -69,7 +69,7 @@ start:
 	invoke	wsprintf, addr buffer, addr szFmt, eax	 
 	invoke	StdOut, addr szMsg5
 	invoke	StdOut, addr buffer
-;³ÌĞò½áÊøÍË³ö		
+;ç¨‹åºç»“æŸé€€å‡º		
 leave_prog:
 	invoke ExitProcess, 0
 ;------------------------------------------------------------------------------------------
@@ -89,21 +89,21 @@ prefix:
 	jmp nequal										;no jmp to neequal
 equal:												;array[edi] = ++esi
 	inc esi
-	mov [array+4*edi], esi							;esi save in array[edi], arrayÊı×éÖĞediÏÂ±ê
+	mov [array+4*edi], esi							;esi save in array[edi], arrayæ•°ç»„ä¸­ediä¸‹æ ‡
 	inc edi											;edi move 1 char
 	jmp prefix										;continue find prefix
 nequal:					;esi=0; array[edi] = esi
-	xor esi, esi									;Ò»µ©Óöµ½²»ÏàÍ¬µÄ£¬esiÖÃÁã
+	xor esi, esi									;ä¸€æ—¦é‡åˆ°ä¸ç›¸åŒçš„ï¼Œesiç½®é›¶
 	mov ah, [ecx+esi]
-	cmp ah, al										;µ±Ç°×Ö·ûÔÙ´ÎºÍµÚÒ»¸ö×Ö·û±È½Ï
-	jne next										;²»Í¬£¬jmp next
-	inc esi											;ÏàÍ¬£¬esi move 1 char
+	cmp ah, al										;å½“å‰å­—ç¬¦å†æ¬¡å’Œç¬¬ä¸€ä¸ªå­—ç¬¦æ¯”è¾ƒ
+	jne next										;ä¸åŒï¼Œjmp next
+	inc esi											;ç›¸åŒï¼Œesi move 1 char
 next:
-	mov [array+4*edi], esi							;ÀàËÆequalÖĞµÄÍ¬Ñù²Ù×÷
+	mov [array+4*edi], esi							;ç±»ä¼¼equalä¸­çš„åŒæ ·æ“ä½œ
 	inc edi											;edi move 1 char
 	jmp prefix										;continue find prefix
-;Ö±µ½Óöµ½00£¬Ç°×º±í¼ÆËã½áÊø£¬´ËÊ±£¬Ç°×º±íÖĞ±£´æÁËÈç¹ûÏàÍ¬£¬esi²»ĞèÒªÔÙ»ØËİµÄÆ«ÒÆÁ¿
-;±ÈÈçAAABC array ±£´æÁË£¬0£¬1£¬2£¬0£¬0ÓÃË«×ÖµÄ¸ñÊ½
+;ç›´åˆ°é‡åˆ°00ï¼Œå‰ç¼€è¡¨è®¡ç®—ç»“æŸï¼Œæ­¤æ—¶ï¼Œå‰ç¼€è¡¨ä¸­ä¿å­˜äº†å¦‚æœç›¸åŒï¼Œesiä¸éœ€è¦å†å›æº¯çš„åç§»é‡
+;æ¯”å¦‚AAABC array ä¿å­˜äº†ï¼Œ0ï¼Œ1ï¼Œ2ï¼Œ0ï¼Œ0ç”¨åŒå­—çš„æ ¼å¼
 search:
 	xor esi, esi		;esi=0						;initial source char begin from 0
 	xor edi, edi		;edi=0						;initial text target char begin from 0
@@ -122,13 +122,13 @@ pair:				;edi++;esi++					;pair to continue next esi and next edi
 	inc esi
 	jmp search_loop
 unpair:				;edi++;esi = array[esi]s	
-	cmp esi, 0										;search string ÖĞµÚÒ»¸ö¾Í²»Æ¥ÅäÊ±ºò£¬edi+1, esi»¹ÊÇ´Ó0¿ªÊ¼£¬esi±£³Ö0²»±ä
+	cmp esi, 0										;search string ä¸­ç¬¬ä¸€ä¸ªå°±ä¸åŒ¹é…æ—¶å€™ï¼Œedi+1, esiè¿˜æ˜¯ä»0å¼€å§‹ï¼Œesiä¿æŒ0ä¸å˜
 	je next_u
-	dec esi											;search stringµÚ¶ş¸öÖ®ºó²Å²»Æ¥ÅäÊ±,¸ù¾İ²¿·ÖÆ¥Åä±í»ñµÃsearch string µÄ esiÆ«ÒÆÖµ
+	dec esi											;search stringç¬¬äºŒä¸ªä¹‹åæ‰ä¸åŒ¹é…æ—¶,æ ¹æ®éƒ¨åˆ†åŒ¹é…è¡¨è·å¾—search string çš„ esiåç§»å€¼
 	push dword ptr [array+4*esi]							
 	pop esi											
 	jmp search_loop									;continue search
-next_u:												;search string ÖĞµÚÒ»¸ö¾Í²»Æ¥ÅäÊ±ºò£¬edi+1, esi»¹ÊÇ´Ó0¿ªÊ¼£¬esi±£³Ö0²»±ä
+next_u:												;search string ä¸­ç¬¬ä¸€ä¸ªå°±ä¸åŒ¹é…æ—¶å€™ï¼Œedi+1, esiè¿˜æ˜¯ä»0å¼€å§‹ï¼Œesiä¿æŒ0ä¸å˜
 	inc edi
 	jmp search_loop
 found:
@@ -145,7 +145,7 @@ goend:
 		invoke	StdOut, addr buffer
 		inc esi
 	.until (esi==dwBytesPtn)
-	mov eax, edi	;return value in eax<-edi		;ediÖĞ±£´æµÄÊÇÆ¥Åä³É¹¦ºóµÄtextÊ××Ö·ûÆ«ÒÆµØÖ·,save in eax ready for kmp return
+	mov eax, edi	;return value in eax<-edi		;ediä¸­ä¿å­˜çš„æ˜¯åŒ¹é…æˆåŠŸåçš„texté¦–å­—ç¬¦åç§»åœ°å€,save in eax ready for kmp return
 	ret
 kmp endp
 end	start
