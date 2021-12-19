@@ -1,19 +1,19 @@
-������һ��Messagebox���򣬳�����������windows.inc��Ԥ�����SYSTEMTIME�ṹ��
-�޶���ʽ��ʹ��%2d��ʾ��ʽΪ��λʮ������
-��һ��invokeʹ��api������ȡϵͳʱ���������ṹ��sysTime
-Ȼ�󽫱����ṹ���е���������ֽ⸳ֵ���Ĵ���
-�ڶ���invokeʹ��api������ʽ����Ϣ�������浽buffer
-������invokeʹ��api������ʾmessagebox,����box����ʾ��Ϣ��
+这是另一个Messagebox程序，程序中引用了windows.inc中预定义的SYSTEMTIME结构，
+限定格式中使用%2d表示格式为两位十进制数
+第一个invoke使用api函数获取系统时间存入变量结构体sysTime
+然后将变量结构体中的数据逐个分解赋值给寄存器
+第二个invoke使用api函数格式化信息串并保存到buffer
+第三个invoke使用api函数显示messagebox,并在box中显示信息串
 
-��file1��ͬ��Դ�ļ�����Ϣ��Ӧ��ANSI���뱣�棬����utf-8���棬�������������
-����Ӵ���8086�����û����������ָ��movzx
-���
-movzx�ǽ�Դ�����������ݿ�����Ŀ�Ĳ�������������ֵ��0��չ��16λ����32λ��������ֻ�������޷��������� ��������������ָ�ʽ��
-movzx 32λͨ�üĴ���, 8λͨ�üĴ���/�ڴ浥Ԫ
-movzx 32λͨ�üĴ���, 16λͨ�üĴ���/�ڴ浥Ԫ
-movzx 16λͨ�üĴ���, 8λͨ�üĴ���/�ڴ浥Ԫ
-�����༭
-����
-��eax=00304000h
-��ִ�� movzx eax, ax�� eax = 00004000h.
-��ִ�� movzx eax, ah�� eax = 00000040h.
+和file1相同，源文件中信息串应以ANSI编码保存，如以utf-8保存，会出现中文乱码
+这里接触了8086汇编中没有遇到过的指令movzx
+简介
+movzx是将源操作数的内容拷贝到目的操作数，并将该值用0扩展至16位或者32位。但是它只适用于无符号整数。 他大致下面的三种格式。
+movzx 32位通用寄存器, 8位通用寄存器/内存单元
+movzx 32位通用寄存器, 16位通用寄存器/内存单元
+movzx 16位通用寄存器, 8位通用寄存器/内存单元
+举例编辑
+例如
+令eax=00304000h
+若执行 movzx eax, ax后 eax = 00004000h.
+若执行 movzx eax, ah后 eax = 00000040h.
