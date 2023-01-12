@@ -15,7 +15,6 @@ Caption	db '输出', 0
 szFmt	db 'The Result is %d', 0
 i		db 0
 sum		db 0
-
 .code
 start:
 	mov edi, 0
