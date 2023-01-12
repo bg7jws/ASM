@@ -1,8 +1,8 @@
 ;ml /c /coff filename
 ;link /subsystem:console filename
 .386
-.model flat, stdcall
-option casemap:none
+.model	flat, stdcall
+option	casemap:none
 include windows.inc
 include kernel32.inc
 include user32.inc
