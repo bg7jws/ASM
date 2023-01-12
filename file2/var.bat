@@ -1,3 +1,4 @@
+rem make path
 set masm32dir=c:\masm32
 set include=%masm32dir%\include;
 set lib=%masm32dir%\lib;%lib%
