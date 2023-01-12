@@ -8,7 +8,6 @@ include		kernel32.inc
 include		user32.inc
 includelib	kernel32.lib
 includelib	user32.lib
-
 .data
 sysTime SYSTEMTIME <>
 CapMsg	db '系统当前时间',0
